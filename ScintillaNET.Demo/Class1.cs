@@ -1,4 +1,5 @@
-﻿using System;
+﻿// prueba
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,13 @@ namespace ScintillaNET.Demo
         public const int StyleNumber = 3;
         public const int StyleString = 4;
         public const int StyleOperator = 5;
+        public const int StyleComment = 6;
 
         private const int STATE_UNKNOWN = 0;
         private const int STATE_IDENTIFIER = 1;
         private const int STATE_NUMBER = 2;
         private const int STATE_STRING = 3;
+        private const int STATE_COMMENT = 4;
 
         private HashSet<string> keywords;
 
@@ -30,21 +33,23 @@ namespace ScintillaNET.Demo
 
             var length = 0;
             var state = STATE_UNKNOWN;
-            string operators = "[]{}+-*/=();,.%&#?!|\\<>";
+            string operators = ":[]{}+-*/=();,.%&#?!|\\<>";
 
             // Start styling
             scintilla.StartStyling(startPos);
             while (startPos < endPos)
             {
+                var c2 = ' '; var c1 = ' ';
                 var c = (char)scintilla.GetCharAt(startPos);
 
             REPROCESS:
                 switch (state)
                 {
                     case STATE_UNKNOWN:
-                        if (c == '"')
+                        if (c == '"'  || c=='\'')
                         {
                             // Start of "string"
+                            c2 = c;
                             scintilla.SetStyling(1, StyleString);
                             state = STATE_STRING;
                         }
@@ -60,6 +65,20 @@ namespace ScintillaNET.Demo
                         }
                         else if (operators.Contains(c))
                         {
+                            c1 = (char)scintilla.GetCharAt(startPos+1);
+                            if (c == '/' && c1 == '/')
+                            {
+                                state = STATE_COMMENT;
+                                startPos++;
+                                goto REPROCESS;
+                            }
+                            else if (c == '/' && c1 == '*')
+                            {
+                                state = STATE_COMMENT;
+                                startPos++;
+                                goto REPROCESS;
+                            }
+                            else
 
                             scintilla.SetStyling(1, StyleOperator);
                         }
@@ -71,9 +90,9 @@ namespace ScintillaNET.Demo
                         break;
 
                     case STATE_STRING:
-                        if (c == '"')
+                        if (c == c2)
                         {
-                            length++;
+                            //length-=4;
                             scintilla.SetStyling(length, StyleString);
                             length = 0;
                             state = STATE_UNKNOWN;
@@ -114,6 +133,44 @@ namespace ScintillaNET.Demo
                             length = 0;
                             state = STATE_UNKNOWN;
                             goto REPROCESS;
+                        }
+                        break;
+
+
+                    case STATE_COMMENT:
+                        if (c1 == '/')
+                        {
+                            length = 0;
+                            while (c != '\n' && c != '\r')
+                            {
+                                startPos++; length++;
+                                c = (char)scintilla.GetCharAt(startPos);
+                            }
+                            var style = StyleComment; 
+                            //var comentario = scintilla.GetTextRange(startPos - length, length);
+                            scintilla.SetStyling(++length, style);
+                            length = 0;
+                            state = STATE_UNKNOWN;
+                            goto REPROCESS;
+                        }
+                        else
+                        if (c1 == '*')
+                        {
+                            length = 0; c2 = ' ';
+                            while (c != '*' && c2 != '/')
+                            {
+                                startPos++; length++;
+                                c = (char)scintilla.GetCharAt(startPos);
+                                c2 = (char)scintilla.GetCharAt(startPos+1);
+                            }
+                            var style = StyleComment; length += 2;
+                            //var comentario = scintilla.GetTextRange(startPos - length, length);
+                            scintilla.SetStyling(++length, style);
+                            length = 0;
+                            state = STATE_UNKNOWN;
+                            startPos+=2;
+                            goto REPROCESS;
+
                         }
                         break;
                 }

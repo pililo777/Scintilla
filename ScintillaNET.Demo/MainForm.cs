@@ -1,4 +1,6 @@
-﻿using System;
+﻿// demo
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,7 +30,11 @@ namespace ScintillaNET.Demo {
 
 			// CREATE CONTROL
 			TextArea = new ScintillaNET.Scintilla();
+           
+
 			TextPanel.Controls.Add(TextArea);
+             TextArea.Enabled = true;
+
 
 			// BASIC CONFIG
 			TextArea.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -59,8 +65,10 @@ namespace ScintillaNET.Demo {
 
 			// INIT HOTKEYS
 			InitHotkeys();
+            TextArea.CaretForeColor = Color.White;
+            TextArea.CaretStyle = CaretStyle.Block;
 
-		}
+        }
 
 		private void InitColors() {
 
@@ -95,9 +103,10 @@ namespace ScintillaNET.Demo {
 
 			// Configure the default style
 			TextArea.StyleResetDefault();
-			TextArea.Styles[Style.Default].Font = "Consolas";
+            
+            TextArea.Styles[Style.Default].Font = "Consolas";
 			TextArea.Styles[Style.Default].Size = 10;
-			TextArea.Styles[Style.Default].BackColor = IntToColor(0x212121);
+			TextArea.Styles[Style.Default].BackColor = IntToColor(0x010101);
 			TextArea.Styles[Style.Default].ForeColor = IntToColor(0xFFFFFF);
 			TextArea.StyleClearAll();
 
@@ -134,6 +143,7 @@ namespace ScintillaNET.Demo {
             TextArea.Styles[CSharpLexer.StyleIdentifier].ForeColor = Color.Teal;
             TextArea.Styles[CSharpLexer.StyleNumber].ForeColor = Color.Purple;
             TextArea.Styles[CSharpLexer.StyleString].ForeColor = Color.Red;
+            TextArea.Styles[CSharpLexer.StyleComment].ForeColor = Color.Blue;
 
             TextArea.Lexer = Lexer.Container;
  
@@ -146,8 +156,8 @@ namespace ScintillaNET.Demo {
 		}
 
 		private void OnTextChanged(object sender, EventArgs e) {
-
-		}
+            
+        }
 		
 
 		#region Numbers, Bookmarks, Code Folding
