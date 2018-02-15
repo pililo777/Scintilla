@@ -37,9 +37,13 @@ namespace ScintillaNET.Demo
 
             // Start styling
             scintilla.StartStyling(startPos);
+
+            var c2 = ' ';
+            var c1 = ' ';
+
             while (startPos < endPos)
             {
-                var c2 = ' '; var c1 = ' ';
+                
                 var c = (char)scintilla.GetCharAt(startPos);
 
             REPROCESS:
@@ -50,7 +54,7 @@ namespace ScintillaNET.Demo
                         {
                             // Start of "string"
                             c2 = c;
-                            scintilla.SetStyling(1, StyleString);
+                            scintilla.SetStyling(1, StyleOperator);
                             state = STATE_STRING;
                         }
                         else if (Char.IsDigit(c))
@@ -95,6 +99,7 @@ namespace ScintillaNET.Demo
                             //length-=4;
                             scintilla.SetStyling(length, StyleString);
                             length = 0;
+                            scintilla.SetStyling(1, StyleOperator);
                             state = STATE_UNKNOWN;
                         }
                         else
