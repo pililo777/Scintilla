@@ -123,7 +123,7 @@ namespace ScintillaNET.Demo
                         break;
 
                     case STATE_IDENTIFIER:
-                        if (Char.IsLetterOrDigit(c))
+                        if (Char.IsLetterOrDigit(c) || c == '-')
                         {
                             length++;
                         }
@@ -161,19 +161,26 @@ namespace ScintillaNET.Demo
                         else
                         if (c1 == '*')
                         {
+                            scintilla.SetStyling(1, StyleComment);
+                            scintilla.SetStyling(1, StyleComment);
                             length = 0; c2 = ' ';
-                            while (c != '*' && c2 != '/')
+                            while (c != '*' || c2 != '/')
                             {
                                 startPos++; length++;
                                 c = (char)scintilla.GetCharAt(startPos);
+                                
                                 c2 = (char)scintilla.GetCharAt(startPos+1);
                             }
-                            var style = StyleComment; length += 2;
+                            length--;
+                            var style = StyleComment;
+                            //length += 1;
                             //var comentario = scintilla.GetTextRange(startPos - length, length);
-                            scintilla.SetStyling(++length, style);
+                            scintilla.SetStyling(length, style);
+                            scintilla.SetStyling(1, StyleComment);
+                            scintilla.SetStyling(1, StyleComment);
                             length = 0;
                             state = STATE_UNKNOWN;
-                            startPos+=2;
+                            startPos += 2;
                             goto REPROCESS;
 
                         }
