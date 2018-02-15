@@ -123,7 +123,7 @@ namespace ScintillaNET.Demo
                         break;
 
                     case STATE_IDENTIFIER:
-                        if (Char.IsLetterOrDigit(c) || c == '-')
+                        if (Char.IsLetterOrDigit(c) || c == '-' || c == '_')
                         {
                             length++;
                         }
