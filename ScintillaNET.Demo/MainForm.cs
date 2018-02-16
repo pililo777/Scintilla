@@ -61,7 +61,7 @@ namespace ScintillaNET.Demo {
 			InitDragDropFile();
 
 			// DEFAULT FILE
-			LoadDataFromFile("../../MainForm.cs");
+			LoadDataFromFile("../../iann.pr");
 
 			// INIT HOTKEYS
 			InitHotkeys();
@@ -182,7 +182,8 @@ namespace ScintillaNET.Demo {
             TextArea.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
 
             // Enable automatic folding
-            TextArea.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+            //TextArea.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+            TextArea.AutomaticFold = AutomaticFold.None;
 
 
 
@@ -192,7 +193,7 @@ namespace ScintillaNET.Demo {
 
         }
 
-		private void OnTextChanged(object sender, EventArgs e) {
+        private void OnTextChanged(object sender, EventArgs e) {
             
         }
 		
@@ -617,24 +618,42 @@ namespace ScintillaNET.Demo {
 
         #endregion
 
-        private CSharpLexer cSharpLexer = new CSharpLexer("push pop funcion vaciar guardar salir terminar insertar leer llamar proc fin mientras yy oo registro fin-registro close decimales dim convertir imprimir desde hasta si entonces sino si-fin class extends implements import interface new case do while else if for in switch throw get set function var try catch finally while with default break continue delete return each const namespace package include use is as instanceof typeof author copy default deprecated eventType example exampleText exception haxe inheritDoc internal link mtasc mxmlc param private return see serial serialData serialField since throws usage version langversion playerversion productversion dynamic private public partial static intrinsic internal native override protected AS3 final super this arguments null Infinity NaN undefined true false abstract as base bool break by byte case catch char checked class const continue decimal default delegate do double descending explicit event extern else enum false finally fixed float for foreach from goto group if implicit in int interface internal into is lock long new null namespace object operator out override orderby params private protected public readonly ref return switch struct sbyte sealed short sizeof stackalloc static string select this throw true try typeof uint ulong unchecked unsafe ushort using var virtual volatile void while where yield void Null ArgumentError arguments Array Boolean Class Date DefinitionError Error EvalError Function int Math Namespace Number Object RangeError ReferenceError RegExp SecurityError String SyntaxError TypeError uint XML XMLList Boolean Byte Char DateTime Decimal Double Int16 Int32 Int64 IntPtr SByte Single UInt16 UInt32 UInt64 UIntPtr Void Path File System Windows Forms ScintillaNET");
+        private CSharpLexer cSharpLexer = new CSharpLexer("mensaje haz fin-haz ventana etiqueta texto boton evalua graficos actualizar buscar procedimiento linea circulo push pop funcion vaciar guardar salir terminar insertar leer llamar proc fin mientras yy oo registro fin-registro close decimales dim convertir imprimir desde hasta si entonces sino si-fin class extends implements import interface new case do while else if for in switch throw get set function var try catch finally while with default break continue delete return each const namespace package include use is as instanceof typeof author copy default deprecated eventType example exampleText exception haxe inheritDoc internal link mtasc mxmlc param private return see serial serialData serialField since throws usage version langversion playerversion productversion dynamic private public partial static intrinsic internal native override protected AS3 final super this arguments null Infinity NaN undefined true false abstract as base bool break by byte case catch char checked class const continue decimal default delegate do double descending explicit event extern else enum false finally fixed float for foreach from goto group if implicit in int interface internal into is lock long new null namespace object operator out override orderby params private protected public readonly ref return switch struct sbyte sealed short sizeof stackalloc static string select this throw true try typeof uint ulong unchecked unsafe ushort using var virtual volatile void while where yield void Null ArgumentError arguments Array Boolean Class Date DefinitionError Error EvalError Function int Math Namespace Number Object RangeError ReferenceError RegExp SecurityError String SyntaxError TypeError uint XML XMLList Boolean Byte Char DateTime Decimal Double Int16 Int32 Int64 IntPtr SByte Single UInt16 UInt32 UInt64 UIntPtr Void Path File System Windows Forms ScintillaNET");
 
         //private void form_Load(object sender, EventArgs e)
         //{
 
         //}
 
-        private void TextArea_StyleNeeded(object sender, StyleNeededEventArgs e)
+        private void TextArea_StyleNeeded2(object sender, StyleNeededEventArgs e)
         {
             var startPos = TextArea.GetEndStyled();
             var endPos = e.Position;
 
             cSharpLexer.Style(TextArea, startPos, endPos);
         }
+
+
+        private void TextArea_StyleNeeded(object sender, StyleNeededEventArgs e)
+        {
+            var startPos = TextArea.GetEndStyled();
+            var endPos = e.Position;
+            var startPos2 = startPos;
+            var endPos2 = endPos;
+
+
+            cSharpLexer.Style(TextArea, startPos, endPos);
+
+
+            cSharpLexer.Fold(TextArea, 0, TextArea.Lines.Count);
+        }
+
+
     }
 }
 
 
+// codigo:
 
 
 

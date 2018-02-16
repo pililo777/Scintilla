@@ -31,6 +31,7 @@ namespace ScintillaNET.Demo
             var line = scintilla.LineFromPosition(startPos);
             startPos = scintilla.Lines[line].Position;
 
+
             var length = 0;
             var state = STATE_UNKNOWN;
             string operators = ":[]{}+-*/=();,.%&#?!|\\<>";
@@ -40,11 +41,15 @@ namespace ScintillaNET.Demo
 
             var c2 = ' ';
             var c1 = ' ';
+            var lev = 1024;
 
             while (startPos < endPos)
             {
                 
                 var c = (char)scintilla.GetCharAt(startPos);
+                var lin = 0;
+                
+                //scintilla.Lines[line].FoldLevelFlags = FoldLevelFlags.;
 
             REPROCESS:
                 switch (state)
@@ -82,9 +87,9 @@ namespace ScintillaNET.Demo
                                 startPos++;
                                 goto REPROCESS;
                             }
-                            else
+                            else scintilla.SetStyling(1, StyleOperator);
 
-                            scintilla.SetStyling(1, StyleOperator);
+
                         }
                         else
                         {
@@ -187,9 +192,62 @@ namespace ScintillaNET.Demo
                         break;
                 }
 
+                lin = scintilla.LineFromPosition(startPos);
+                scintilla.Lines[lin].FoldLevel = lev;
+
                 startPos++;
+                
+
+
             }
         }
+
+
+
+
+
+        public void Fold(Scintilla scintilla, int startPos, int endPos)
+        {
+
+            var line = startPos;
+            startPos = scintilla.Lines[line].Position;
+            endPos = scintilla.Lines[endPos].Position;
+            var lev = 1024;
+            var c = ' ';
+
+            while (startPos < endPos)
+            {
+                c = (char)scintilla.GetCharAt(startPos);
+                line = scintilla.LineFromPosition(startPos);
+
+                if (c == '{')
+                {
+
+                    scintilla.Lines[line].FoldLevelFlags = FoldLevelFlags.Header;
+                    lev++;
+                    scintilla.Lines[line + 1].FoldLevel = lev;
+                    while (c != '\n') { startPos++; c = (char)scintilla.GetCharAt(startPos); }
+                    startPos++;
+
+                }
+                else if (c == '}')
+                {
+                    lev--;
+                    scintilla.Lines[line].FoldLevel = lev;
+
+                    
+                    while (c != '\n') { startPos++; c = (char)scintilla.GetCharAt(startPos); }
+                    startPos++;
+
+                }
+
+                else { scintilla.Lines[line].FoldLevel = lev; startPos++; }
+
+            }
+
+        }
+
+
 
         public CSharpLexer(string keywords)
         {
@@ -197,5 +255,9 @@ namespace ScintillaNET.Demo
             var list = Regex.Split(keywords ?? string.Empty, @"\s+").Where(l => !string.IsNullOrEmpty(l));
             this.keywords = new HashSet<string>(list);
         }
+
+
+
+
     }
 }
