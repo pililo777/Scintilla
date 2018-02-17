@@ -144,6 +144,7 @@ namespace ScintillaNET.Demo {
             TextArea.Styles[CSharpLexer.StyleNumber].ForeColor = Color.SpringGreen;
             TextArea.Styles[CSharpLexer.StyleString].ForeColor = Color.Red;
             TextArea.Styles[CSharpLexer.StyleComment].ForeColor = Color.Blue;
+            TextArea.Styles[CSharpLexer.StyleOperator].ForeColor = Color.AntiqueWhite;
 
             TextArea.Lexer = Lexer.Container;
             //TextArea.Lexer = Lexer.Cpp;
