@@ -267,9 +267,10 @@ namespace ScintillaNET.Demo
 
                 //line = scintilla.LineFromPosition(startPos);
 
-                var pos1 = scintilla.Lines[line].Position;
-                var pos2 = scintilla.Lines[line].EndPosition;
-                var texto = scintilla.GetTextRange(pos1, pos2 - pos1);
+                //var pos1 = scintilla.Lines[line].Position;
+                //var pos2 = scintilla.Lines[line].EndPosition;
+                //var texto = scintilla.GetTextRange(pos1, pos2 - pos1);
+                var texto = scintilla.Lines[line].Text;
 
 
 
@@ -300,61 +301,62 @@ namespace ScintillaNET.Demo
                 }
 
                 lev = scintilla.Lines[line].FoldLevel;
+                //lev = scintilla.Lines[line].Indentation;
 
 
                 switch (lev)
                 {
                     case 1024:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(0);
                         break;
 
                     case 1025:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(1);
                         break;
 
                     case 1026:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(2);
                         break;
 
                     case 1027:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(3);
                         break;
 
                     case 1028:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(4);
                         break;
 
                     default:
-                        scintilla.Lines[line].MarkerDelete(4);
-                        scintilla.Lines[line].MarkerDelete(3);
-                        scintilla.Lines[line].MarkerDelete(2);
-                        scintilla.Lines[line].MarkerDelete(1);
-                        scintilla.Lines[line].MarkerDelete(0);
+                        //scintilla.Lines[line].MarkerDelete(4);
+                        //scintilla.Lines[line].MarkerDelete(3);
+                        //scintilla.Lines[line].MarkerDelete(2);
+                        //scintilla.Lines[line].MarkerDelete(1);
+                        scintilla.Lines[line].MarkerDelete(-1);
                         scintilla.Lines[line].MarkerAdd(0);
                         break;
 
